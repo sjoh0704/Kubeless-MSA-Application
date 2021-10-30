@@ -6,7 +6,7 @@ import numpy as np
 def handler(event, context):
     print("event occurs")
     # Load the model
-    model = load_model('keras_model.h5')
+    model = load_model('./model/keras_model.h5')
 
     # Create the array of the right shape to feed into the keras model
     # The 'length' or number of images you can put into the array is
@@ -32,3 +32,4 @@ def handler(event, context):
     # print(prediction)
     print("사람:", float(prediction[0][0]))
     print("손바닥:", float(prediction[0][1]))
+# handler(1, 1)
