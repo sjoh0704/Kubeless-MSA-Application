@@ -25,7 +25,7 @@ export const UploadS3 = async (files) => {
     if (!files) {
         return;
     }
-    console.log(files);
+
     files.forEach((file) => {
         uploadFile(file, S3Config)
             .then((data) => console.log(data))
