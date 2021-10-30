@@ -1,0 +1,91 @@
+apiVersion: kubeless.io/v1beta1
+kind: Function
+metadata:
+  creationTimestamp: null
+  labels:
+    created-by: kubeless
+    function: producer
+  name: producer
+  namespace: default
+spec:
+  checksum: sha256:dfd716d4a46a43bea868109e26b458553b07cec61f7de05008ff0cfe1a839fd6
+  deployment:
+    metadata:
+      creationTimestamp: null
+    spec:
+      selector: null
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - imagePullPolicy: Always
+            name: ""
+            resources: {}
+    status: {}
+  deps: |
+    {
+      "name": "producer",
+      "version": "1.0.0",
+      "description": "",
+      "main": "index.js",
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "keywords": [],
+      "author": "",
+      "license": "ISC",
+      "dependencies": {
+        "axios": "^0.24.0"
+      }
+    }
+  function: |2+
+
+    module.exports = {
+        producer: function async(event, context) {
+            const axios = require("axios");
+            console.log(event);
+            try {
+                const imageUrl = event["data"];
+                axios.post("http://checkface.default.svc:8080", imageUrl)
+                .then((res) => {
+                    console.log(res)
+                    return "ok"
+                });
+
+            } catch (error) {
+                return 'fail'
+            }
+
+            return 'fail'
+        },
+    };
+
+  function-content-type: text
+  handler: test.producer
+  horizontalPodAutoscaler:
+    metadata:
+      creationTimestamp: null
+    spec:
+      maxReplicas: 0
+      scaleTargetRef:
+        kind: ""
+        name: ""
+    status:
+      conditions: null
+      currentMetrics: null
+      currentReplicas: 0
+      desiredReplicas: 0
+  runtime: nodejs6
+  service:
+    ports:
+    - name: http-function-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      created-by: kubeless
+      function: producer
+    type: ClusterIP
+  timeout: "180"

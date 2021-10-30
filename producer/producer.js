@@ -1,14 +1,20 @@
-const axios = require("axios");
+
 module.exports = {
     producer: function async(event, context) {
+        const axios = require("axios");
         console.log(event);
         try {
             const imageUrl = event["data"];
-            let res = await axios.post("http://checkface.default.svc:8080", imageUrl);
+            axios.post("http://checkface.default.svc:8080", imageUrl)
+            .then((res) => {
+                console.log(res)
+                return "ok"
+            });
 
-            return res.data;
         } catch (error) {
-            console.log(error);
+            return 'fail'
         }
+
+        return 'fail'
     },
 };
