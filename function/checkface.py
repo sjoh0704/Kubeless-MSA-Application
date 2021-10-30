@@ -8,8 +8,8 @@ from io import BytesIO
 def handler(event, context):
     print("event occurs")
     try:
-        # url = event['data']['imageURL']
-        url = "https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png"
+        url = event['data']['imageURL']
+        # url = "https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png"
         print(url)
         req = urllib.request.Request(url, headers = {"User-Agent" : "Mozilla/5.0"})
         res = urllib.request.urlopen(req).read()
