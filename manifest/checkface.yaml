@@ -1,0 +1,119 @@
+apiVersion: kubeless.io/v1beta1
+kind: Function
+metadata:
+  creationTimestamp: null
+  labels:
+    created-by: kubeless
+    function: checkface
+  name: checkface
+  namespace: default
+spec:
+  checksum: sha256:ac77c0e78f84efd06450556998932040d05cee2b533086c8f470d1751f48c629
+  deployment:
+    metadata:
+      creationTimestamp: null
+    spec:
+      selector: null
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - imagePullPolicy: Always
+            name: ""
+            volumeMounts:
+            - mountPath: /kubeless/model
+              name: my-model
+
+            resources: {}
+          volumes:
+          - name: my-model
+            hostPath: 
+              path: /my-model
+    status: {}
+  deps: |
+    absl-py==0.15.0
+    asgiref==3.4.1
+    astunparse==1.6.3
+    cached-property==1.5.2
+    cachetools==4.2.4
+    certifi==2021.10.8
+    charset-normalizer==2.0.7
+    clang==5.0
+    dataclasses==0.6
+    Django==3.2.8
+    flatbuffers==1.12
+    gast==0.4.0
+    google-auth==2.3.2
+    google-auth-oauthlib==0.4.6
+    google-pasta==0.2.0
+    grpcio==1.41.1
+    h5py==3.1.0
+    idna==3.3
+    importlib-metadata==4.8.1
+    keras==2.6.0
+    Keras-Preprocessing==1.1.2
+    Markdown==3.3.4
+    numpy==1.19.5
+    oauthlib==3.1.1
+    opt-einsum==3.3.0
+    Pillow==8.4.0
+    protobuf==3.19.1
+    pyasn1==0.4.8
+    pyasn1-modules==0.2.8
+    pytz==2021.3
+    requests==2.26.0
+    requests-oauthlib==1.3.0
+    rsa==4.7.2
+    six==1.15.0
+    sqlparse==0.4.2
+    tensorboard==2.7.0
+    tensorboard-data-server==0.6.1
+    tensorboard-plugin-wit==1.8.0
+    tensorflow==2.6.0
+    tensorflow-estimator==2.6.0
+    termcolor==1.1.0
+    typing-extensions==3.7.4.3
+    urllib3==1.26.7
+    Werkzeug==2.0.2
+    wrapt==1.12.1
+    zipp==3.6.0
+  function: "\nfrom keras.models import load_model\nfrom PIL import Image, ImageOps\nimport
+    numpy as np\nimport urllib.request\ndef handler(event, context):\n    print(\"event
+    occurs\")\n    # download image\n    try:\n        url = event['data']\n        urllib.request.urlretrieve(url,
+    \"test.jpg\")\n    except Exception as e:\n        print(e)\n        return \n\n
+    \   # keras \n    model = load_model('./model/keras_model.h5')\n    data = np.ndarray(shape=(1,
+    224, 224, 3), dtype=np.float32)\n    image = Image.open('./test.jpg')\n    size
+    = (224, 224)\n    image = ImageOps.fit(image, size, Image.ANTIALIAS)\n    image_array
+    = np.asarray(image)\n    normalized_image_array = (image_array.astype(np.float32)
+    / 127.0) - 1\n    data[0] = normalized_image_array\n    prediction = model.predict(data)\n\n
+    \   #result\n    print(\"사람:\", float(prediction[0][0]))\n    print(\"손바닥:\",
+    float(prediction[0][1]))\n# handler(1, 1)\n"
+  function-content-type: text
+  handler: checkface.handler
+  horizontalPodAutoscaler:
+    metadata:
+      creationTimestamp: null
+    spec:
+      maxReplicas: 0
+      scaleTargetRef:
+        kind: ""
+        name: ""
+    status:
+      conditions: null
+      currentMetrics: null
+      currentReplicas: 0
+      desiredReplicas: 0
+  runtime: python3.7
+  service:
+    ports:
+    - name: http-function-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      created-by: kubeless
+      function: checkface
+    type: ClusterIP
+  timeout: "180"
