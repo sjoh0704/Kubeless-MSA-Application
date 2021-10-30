@@ -16,13 +16,14 @@ const UploadImage = () => {
 
         UploadS3([state]);
 
-        // axios
-        //     .post("#", body)
-        //     .then((response) => {
-        //     })
-        //     .catch((e) => {
-
-        //     });
+        axios
+            .post("", body)
+            .then((response) => {
+                alert("성공")
+            })
+            .catch((e) => {
+                alert("실패")
+            });
     }
 
     return (
