@@ -1,30 +1,34 @@
 import { useState } from "react";
-import '../assets/css/ImageUpload.css'
+import "../assets/css/ImageUpload.css";
 import { S3Config, UploadS3 } from "./UploadS3";
-import axios from 'axios'
+import axios from "axios";
+import sha256 from "sha256";
 
 const UploadImage = () => {
+    const [hash, setHash] = useState(null);
     const [state, setState] = useState(null);
     console.log(state);
 
-    const onSubmit =(event)=>{
+    const onSubmit = (event) => {
+        let hashed = sha256(state.name);
         const body = {
-            imageURL: `https://${S3Config.bucketName}.s3.${S3Config.region}.amazonaws.com/${state.name}` 
+            userId: hashed,
+            imageURL: `https://${S3Config.bucketName}.s3.${S3Config.region}.amazonaws.com/${state.name}`,
         };
-        console.log(body)
+        console.log(body);
 
-
+        setHash(hashed);
         UploadS3([state]);
 
         axios
-            .post("", body)
+            .post("/api/v1/info", body)
             .then((response) => {
-                alert("성공")
+                alert("성공");
             })
             .catch((e) => {
-                alert("실패")
+                alert("실패");
             });
-    }
+    };
 
     return (
         <div>
