@@ -25,7 +25,7 @@ router.post('/info', async(req, res)=> {
     }
     const check = await Info.find({userId}).exec();
     if(check.length){
-        res.status(400).send({message: 'same userID error'});
+        res.send({message: 'already info exist'});
         return;
     }
     const info = new Info({userId, a, b});
