@@ -18,7 +18,7 @@ spec:
         app: front-app
     spec:
       containers:
-      - image: tmdwn0704/front-app:01
+      - image: tmdwn0704/front-app:02
         name: front-app
         env:
         - name: REACT_APP_BASE_URL
