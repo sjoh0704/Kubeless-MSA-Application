@@ -18,7 +18,7 @@ spec:
         app: backend
     spec:
       containers:
-      - image: tmdwn0704/backend:01
+      - image: tmdwn0704/backend:02
         name: backend
         ports:
         - containerPort: 8080
