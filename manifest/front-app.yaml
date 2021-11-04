@@ -23,6 +23,9 @@ spec:
         env:
         - name: REACT_APP_BASE_URL
           value: "http://backend.default.svc:8080"
+        envFrom:
+        - secretRef:
+            name: aws-bucket-secret
         ports:
         - containerPort: 3000
         resources: {}
