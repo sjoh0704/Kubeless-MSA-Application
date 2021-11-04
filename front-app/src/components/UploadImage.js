@@ -5,6 +5,10 @@ import axios from "axios";
 import sha256 from "sha256";
 
 const UploadImage = () => {
+    const [contents, setContents] = useState({
+        a: 0,
+        b: 0,
+    });
     const [hash, setHash] = useState(null);
     const [state, setState] = useState(null);
     console.log(state);
@@ -17,16 +21,42 @@ const UploadImage = () => {
         };
         console.log(body);
 
-        setHash(hashed);
+   
         UploadS3([state]);
 
         axios
-            .post("/api/v1/info", body)
+            .post("/producer", body)
             .then((response) => {
+                setHash(hashed);
                 alert("성공");
             })
             .catch((e) => {
+                setHash(null)
                 alert("실패");
+            });
+    };
+    const onRemove = (event) => {
+        setState(null);
+        setHash(null);
+        setContents({
+            a: 0,
+            b: 0,
+        });
+    };
+
+    const onResult = (event) => {
+        axios
+            .get(`/api/v1/info/${hash}`)
+            // .get(`/api/v1/info/11`)
+            .then((response) => {
+                alert("성공");
+
+                console.log(response);
+                let payload = response.data.payload;
+                setContents({ a: payload.a, b: payload.b });
+            })
+            .catch((e) => {
+                alert("다시 시도해주세요");
             });
     };
 
@@ -34,9 +64,16 @@ const UploadImage = () => {
         <div>
             <input type="file" class="custom-file-input" id="input" accept="image/*" onChange={(event) => setState(event.target.files[0])} value="" />
 
-            {state && <button onClick={(event) => setState(null)}>Remove Image</button>}
+            {state && <button onClick={(event) => onRemove(event)}>Remove Image</button>}
             {state && <img id="output" style={{ width: "50%" }} src={URL.createObjectURL(state)} />}
             {state && <button onClick={(event) => onSubmit(event)}>제출하기</button>}
+            {hash && <button onClick={(event) => onResult(event)}>결과 확인하기</button>}
+            {hash && (
+                <div>
+                    <p>a: {contents.a}</p>
+                    <p>b: {contents.b}</p>
+                </div>
+            )}
         </div>
     );
 };
