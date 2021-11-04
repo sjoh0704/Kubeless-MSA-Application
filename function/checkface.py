@@ -3,6 +3,7 @@ from PIL import Image, ImageOps
 import numpy as np
 import urllib.request
 from io import BytesIO
+import requests, json
 
 def handler(event, context):
     print("event occurs")
@@ -36,6 +37,11 @@ def handler(event, context):
         #result
         print("사람:", float(prediction[0][0]))
         print("손바닥:", float(prediction[0][1]))
+        data = {
+            'a': float(prediction[0][0]),
+            'b': float(prediction[0][1])
+        }
+        res = requests.post("http://backend.default.svc:8080", data=data)
         return 'ok'
         
     except Exception as e:
@@ -45,5 +51,5 @@ def handler(event, context):
 
 
    
-handler(1, 1)
+# handler(1, 1)
 

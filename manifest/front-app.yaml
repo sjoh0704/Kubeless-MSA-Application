@@ -20,6 +20,9 @@ spec:
       containers:
       - image: tmdwn0704/front-app:01
         name: front-app
+        env:
+        - name: REACT_APP_BASE_URL
+          value: "http://backend.default.svc:8080"
         ports:
         - containerPort: 3000
         resources: {}
