@@ -9,6 +9,7 @@ def handler(event, context):
     print("event occurs")
     try:
         url = event['data']['imageURL']
+        userId = event['data']['userId']
         # url = "https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png"
         print(url)
         req = urllib.request.Request(url, headers = {"User-Agent" : "Mozilla/5.0"})
@@ -38,6 +39,7 @@ def handler(event, context):
         print("사람:", float(prediction[0][0]))
         print("손바닥:", float(prediction[0][1]))
         data = {
+            'userId': userId,
             'a': float(prediction[0][0]),
             'b': float(prediction[0][1])
         }
