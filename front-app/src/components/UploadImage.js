@@ -17,7 +17,7 @@ const UploadImage = () => {
         let hashed = sha256(state.name);
         const body = {
             userId: hashed,
-            imageURL: `https://${S3Config.bucketName}.s3.${S3Config.region}.amazonaws.com/${state.name}`,
+            imageUrl: `https://${S3Config.bucketName}.s3.${S3Config.region}.amazonaws.com/${state.name}`,
         };
         console.log(body);
 
