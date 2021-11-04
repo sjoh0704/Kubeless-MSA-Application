@@ -8,7 +8,7 @@ metadata:
   name: checkface
   namespace: default
 spec:
-  checksum: sha256:6c9432e25da54e33038e0fab6d054010803ce7f44b7c4db6b71804a9ea257bc6
+  checksum: sha256:b6e61ebe1e8d9aa451610dfb765f49fe6cea0f749e1d2a25d1c02be98818a2ac
   deployment:
     metadata:
       creationTimestamp: null
@@ -27,10 +27,9 @@ spec:
             - mountPath: /kubeless/model
               name: my-model
 
-            resources: {}
           volumes:
           - name: my-model
-            hostPath: 
+            hostPath:
               path: /my-model
     status: {}
   deps: |
@@ -80,23 +79,32 @@ spec:
     Werkzeug==2.0.2
     wrapt==1.12.1
     zipp==3.6.0
-  function: "\nfrom keras.models import load_model\nfrom PIL import Image, ImageOps\nimport
-    numpy as np\nimport urllib.request\nfrom io import BytesIO\n\ndef handler(event,
-    context):\n    print(\"event occurs\")\n    try:\n        url = event['data']['imageURL']\n
-    \       # url = \"https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png\"\n
+  function: "from keras.models import load_model\nfrom PIL import Image, ImageOps\nimport
+    numpy as np\nimport urllib.request\n# import urllib.parse\nfrom io import BytesIO\nimport
+    requests, json\n\ndef handler(event, context):\n    print(\"event occurs\")\n
+    \   # event = {}\n    # event['data'] = {'userId': '16e8b85a9a95eb253c8bc2d18bb52da4b8b5271cf7197af6085767614a401b77',
+    'imageUrl': 'https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/Ansible.png'}\n
+    \   try:\n        url = event['data']['imageUrl'].replace(' ','%20')\n        userId
+    = event['data']['userId']\n        # url = \"https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png\"\n
     \       print(url)\n        req = urllib.request.Request(url, headers = {\"User-Agent\"
     : \"Mozilla/5.0\"})\n        print(1)\n        res = urllib.request.urlopen(req).read()\n
-    \       print(2)\n        image = Image.open(BytesIO(res))\n\n         # keras\n
-    \       print(3)\n        model = load_model('/kubeless/model/keras_model.h5')\n
-    \       print(4)\n        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)\n
-    \       print(5)\n        size = (224, 224)\n        print(6)\n        image =
-    ImageOps.fit(image, size, Image.ANTIALIAS)\n        print(7)\n        image_array
-    = np.asarray(image)\n        print(8)\n        normalized_image_array = (image_array.astype(np.float32)
-    / 127.0) - 1\n        print(9)\n        data[0] = normalized_image_array\n        print(10)\n
-    \       prediction = model.predict(data)\n        #result\n        print(\"사람:\",
-    float(prediction[0][0]))\n        print(\"손바닥:\", float(prediction[0][1]))\n        return
-    'ok'\n        \n    except Exception as e:\n        print(e)\n        return 'fail'\n\n
-    \  \n# handler(1, 1)\n\n"
+    \       print(2)\n        image = Image.open(BytesIO(res))\n\n        # keras\n
+    \       print(3)\n        \n        model = load_model('/kubeless/model/keras_model.h5')\n
+    \       # model = load_model('./model/keras_model.h5')\n        print(4)\n        data
+    = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)\n        print(5)\n        size
+    = (224, 224)\n        print(6)\n        image = ImageOps.fit(image, size, Image.ANTIALIAS)\n
+    \       print(7)\n        image_array = np.asarray(image)\n        print(8)\n
+    \       normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1\n
+    \       print(9)\n        data[0] = normalized_image_array\n        print(10)\n
+    \       prediction = model.predict(data)\n        \n        #result\n        print(\"사람:\",
+    float(prediction[0][0]))\n        print(\"손바닥:\", float(prediction[0][1]))\n        data
+    = {\n            'userId': userId,\n            'a': float(prediction[0][0]),\n
+    \           'b': float(prediction[0][1])\n        }\n        print(data)\n        headers
+    = {'Content-Type': 'application/json; charset=utf-8'}\n        # res = requests.post(\"http://localhost:8080/api/v1/info\",
+    data=json.dumps(data), headers=headers)\n        res = requests.post(\"http://backend-service.default.svc:8080/api/v1/info\",
+    data=json.dumps(data), headers=headers)\n        print(res.text)\n        return
+    'ok'\n        \n    except Exception as e:\n        print(e)\n        return 'fail'\n\n\n\n
+    \  \n# handler(1, 1)\n\n\n"
   function-content-type: text
   handler: checkface.handler
   horizontalPodAutoscaler:

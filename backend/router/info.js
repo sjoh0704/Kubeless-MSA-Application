@@ -18,6 +18,7 @@ router.get('/info/:userId', async(req, res)=> {
 
 // create rating
 router.post('/info', async(req, res)=> {
+    console.log(req.body)
     const {userId, a, b} = req.body;
     if(!userId){
         res.status(400).send({message: 'userId 없음'});

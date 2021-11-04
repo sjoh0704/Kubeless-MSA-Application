@@ -23,8 +23,9 @@ def handler(event, context):
 
         # keras
         print(3)
-        # model = load_model('/kubeless/model/keras_model.h5')
+        
         model = load_model('/kubeless/model/keras_model.h5')
+        # model = load_model('./model/keras_model.h5')
         print(4)
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
         print(5)
@@ -39,6 +40,7 @@ def handler(event, context):
         data[0] = normalized_image_array
         print(10)
         prediction = model.predict(data)
+        
         #result
         print("사람:", float(prediction[0][0]))
         print("손바닥:", float(prediction[0][1]))
@@ -47,8 +49,11 @@ def handler(event, context):
             'a': float(prediction[0][0]),
             'b': float(prediction[0][1])
         }
-        # res = requests.post("http://localhost:8080", data=data)
-        res = requests.post("http://backend.default.svc:8080", data=json.dumps(data))
+        print(data)
+        headers = {'Content-Type': 'application/json; charset=utf-8'}
+        # res = requests.post("http://localhost:8080/api/v1/info", data=json.dumps(data), headers=headers)
+        res = requests.post("http://backend-service.default.svc:8080/api/v1/info", data=json.dumps(data), headers=headers)
+        print(res.text)
         return 'ok'
         
     except Exception as e:
@@ -59,4 +64,3 @@ def handler(event, context):
 
    
 # handler(1, 1)
-

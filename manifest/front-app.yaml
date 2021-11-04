@@ -22,7 +22,7 @@ spec:
         name: front-app
         env:
         - name: REACT_APP_BASE_URL
-          value: "http://backend.default.svc:8080"
+          value: "http://backend-service.default.svc:8080"
         envFrom:
         - secretRef:
             name: aws-bucket-secret
