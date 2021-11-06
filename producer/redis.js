@@ -1,4 +1,4 @@
-const conf = require("./conf/redis-conf");
+const conf = require("./conf/rabbit-conf");
 const redis = require("redis");
 
 module.exports = class {
