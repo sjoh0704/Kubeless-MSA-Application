@@ -1,24 +1,22 @@
-const { Kafka } = require('kafkajs');
+const { Kafka } = require("kafkajs");
 
 const kafka = new Kafka({
-    clientId: 'my-app',
-    brokers: ['localhost:9092']
+  clientId: "my-app",
+  brokers: ["localhost:9092"],
 });
 
-const topicName = 'orderCreated';
+const producer = kafka.producer();
 
-const process  = async () => {
-    const admin = kafka.admin();
-    await admin.connect();
-    await admin.createTopics({
-        topics: [{
-            topic: topicName,
-            numPartitions: 2,
-            replicationFactor: 1
-        }
-        ],
-});
-    await admin.disconnect();
+const run = async () => {
+  // Producing
+  await producer.connect();
+  console.log(1)
+  await producer.send({
+    topic: "topic1",
+    messages: [{ value: "Hello KafkaJS user!" }],
+  });
+  console.log(2)
+  process.exit()
 };
 
-process().then(() => console.log('done'));
+run().catch(console.error);
