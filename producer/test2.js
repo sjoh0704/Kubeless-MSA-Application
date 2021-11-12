@@ -12,7 +12,7 @@ const run = async () => {
   await producer.connect();
   console.log(1)
   await producer.send({
-    topic: "topic1",
+    topic: "test-topic",
     messages: [{ value: "Hello KafkaJS user!" }],
   });
   console.log(2)
