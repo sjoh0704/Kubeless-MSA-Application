@@ -9,12 +9,11 @@ amqp.connect(url, function (error0, connection) {
         throw error0;
     }
 
-    
     connection.createChannel(function (error1, channel) {
         if (error1) {
             throw error1;
         }
- 
+
         var msg = "Hello world";
 
         channel.assertQueue(queueName, {
