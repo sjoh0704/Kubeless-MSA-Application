@@ -2,17 +2,15 @@ module.exports = {
     producer: async (event, context) => {
         console.log("event occurs");
         const data = event.data;
-        console.log(data);
         // const data = { userId: "1234123dsfadf", imageUrl: "adfadfadf" };
-        const { userId, imageUrl } = data;
-
-        const planeText = `${userId} ${imageUrl}`;
-
         if (!data || data == "") {
             return "data doesn't exist";
         }
-
         console.log(data);
+        const { userId, imageUrl } = data;
+        const planeText = `${userId} ${imageUrl}`;
+
+        console.log(planeText);
         console.log("producer 시작");
         const { Kafka } = require("kafkajs");
         const kafka = new Kafka({

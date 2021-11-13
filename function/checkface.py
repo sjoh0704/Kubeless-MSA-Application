@@ -8,13 +8,13 @@ import requests, json
 
 def handler(event, context):
     print("event occurs")
-    # event = {}
-    # event['data'] = {'userId': '16e8b85a9a95eb253c8bc2d18bb52da4b8b5271cf7197af6085767614a401b77', 'imageUrl': 'https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/Ansible.png'}
+    event = {}
+    event["data"] = '123 aaadfafadsfdaf'
+    print("data:", event["data"])
     try:
-        url = event['data']['imageUrl'].replace(' ','%20')
-        userId = event['data']['userId']
+        userId, url = event["data"].split()
         # url = "https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png"
-        print(url)
+        print("URL:", url)
         req = urllib.request.Request(url, headers = {"User-Agent" : "Mozilla/5.0"})
         print(1)
         res = urllib.request.urlopen(req).read()
@@ -63,4 +63,4 @@ def handler(event, context):
 
 
    
-# handler(1, 1)
+handler(1, 1)
