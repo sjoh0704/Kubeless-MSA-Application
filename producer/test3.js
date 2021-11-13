@@ -5,12 +5,20 @@ const kafka = new Kafka({
   brokers: ["localhost:9092"],
 });
 
+const producer = kafka.producer();
 const consumer = kafka.consumer({ groupId: "test-group" });
 
 const run = async () => {
+  // Producing
+  await producer.connect();
+  await producer.send({
+    topic: "test-topic",
+    messages: [{ value: "Hello KafkaJS user!" }],
+  });
+
   // Consuming
   await consumer.connect();
-  await consumer.subscribe({ topic: "topic1", fromBeginning: true });
+  await consumer.subscribe({ topic: "test-topic", fromBeginning: true });
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
@@ -19,10 +27,8 @@ const run = async () => {
         offset: message.offset,
         value: message.value.toString(),
       });
-      // process.exit()
     },
   });
-
 };
 
 run().catch(console.error);

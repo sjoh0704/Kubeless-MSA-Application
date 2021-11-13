@@ -1,2 +1,2 @@
-const test = require("./producer2");
-test.producer();
+const pub = require("./producer");
+pub.producer();
