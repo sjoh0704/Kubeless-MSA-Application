@@ -1,11 +1,11 @@
 module.exports = {
     producer: async (event, context) => {
         console.log("event occurs");
-        const BSON = require("bson");
         const data = event.data;
-        // const data = { userId: "1234123dsfadf", a: 0.1, b: 0.2 };
-        let b = BSON.serialize(data);
-        console.log(b);
+        // const data = { userId: "1234123dsfadf", imageUrl: "adfadfadf" };
+        const {userId, imageUrl} = data;
+        const planeText = `${userId} ${imageUrl}`;
+
         if (!data || data == "") {
             return "data doesn't exist";
         }
@@ -23,7 +23,7 @@ module.exports = {
         console.log("보내기");
         await producer.send({
             topic: "test-topic",
-            messages: [{ value: b }],
+            messages: [{ value: planeText }],
         });
 
         await producer.disconnect();
