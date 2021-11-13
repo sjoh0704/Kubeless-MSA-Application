@@ -8,10 +8,11 @@ import requests, json
 
 def handler(event, context):
     print("event occurs")
-    event = {}
-    event["data"] = '123 aaadfafadsfdaf'
-    print("data:", event["data"])
+    # event = {}
+    # event["data"] = '123 aaadfafadsfdaf'
+    
     try:
+        print("data:", event["data"])
         userId, url = event["data"].split()
         # url = "https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png"
         print("URL:", url)
