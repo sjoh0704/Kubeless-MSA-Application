@@ -1,12 +1,15 @@
 module.exports = {
     producer: async (event, context) => {
         console.log("event occurs");
-        const data = { userId: "1234123dsfadf", a: 0.1, b: 0.2 };
-
-        // const data = event.data;
+        const BSON = require("bson");
+        const data = event.data;
+        // const data = { userId: "1234123dsfadf", a: 0.1, b: 0.2 };
+        let b = BSON.serialize(data);
+        console.log(b);
         if (!data || data == "") {
             return "data doesn't exist";
         }
+
         console.log(data);
         console.log("producer 시작");
         const { Kafka } = require("kafkajs");
@@ -20,7 +23,7 @@ module.exports = {
         console.log("보내기");
         await producer.send({
             topic: "test-topic",
-            messages: [{ value: "hello kafkaJS", data: "제발 되어라"}],
+            messages: [{ value: b }],
         });
 
         await producer.disconnect();
