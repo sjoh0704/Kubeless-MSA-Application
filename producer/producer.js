@@ -20,7 +20,7 @@ module.exports = {
         console.log("보내기");
         await producer.send({
             topic: "test-topic",
-            messages: [{ value: "hello kafkaJS "}],
+            messages: [{ value: "hello kafkaJS", data: "제발 되어라"}],
         });
 
         await producer.disconnect();
