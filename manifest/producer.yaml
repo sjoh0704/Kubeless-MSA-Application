@@ -8,7 +8,7 @@ metadata:
   name: producer
   namespace: default
 spec:
-  checksum: sha256:90e884ca7f02803296789ea8a8c7cd70d1372ac42c4f0e8584386cd4dd77ddd9
+  checksum: sha256:3cc20091fe8292ef47f24fac252178087b9e03b6564653cfc3a642ea7efa378d
   deployment:
     metadata:
       creationTimestamp: null
@@ -37,15 +37,43 @@ spec:
       "author": "",
       "license": "ISC",
       "dependencies": {
-        "axios": "^0.24.0"
+        "amqplib": "^0.8.0",
+        "kafkajs": "^1.15.0"
       }
     }
-  function: "module.exports = {\n    producer: function async(event, context) {\n
-    \       const axios = require(\"axios\");\n        console.log(event);\n        try
-    {\n            \n            const data = event[\"data\"];\n            axios.post(\"http://checkface.default.svc:8080\",
-    data).then((res) => {\n                console.log(res);\n                return
-    \"ok\";\n            });\n        } catch (error) {\n            console.log(error)\n
-    \           return \"fail\";\n        }\n\n        return \"fail\";\n    },\n};\n"
+  function: |
+    module.exports = {
+        producer: async (event, context) => {
+            console.log("event occurs");
+            const data = event.data;
+            // const data = { userId: "1234123dsfadf", imageUrl: "adfadfadf" };
+            if (!data || data == "") {
+                return "data doesn't exist";
+            }
+            console.log(data);
+            const { userId, imageUrl } = data;
+            const planeText = `${userId} ${imageUrl}`;
+
+            console.log(planeText);
+            console.log("producer 시작");
+            const { Kafka } = require("kafkajs");
+            const kafka = new Kafka({
+                clientId: "my-app",
+                brokers: ["localhost:9092", "kafka.kubeless.svc:9092"],
+            });
+
+            const producer = kafka.producer();
+            await producer.connect();
+            console.log("보내기");
+            await producer.send({
+                topic: "test-topic",
+                messages: [{ value: planeText }],
+            });
+
+            await producer.disconnect();
+            console.log("producer 끝");
+        },
+    };
   function-content-type: text
   handler: test.producer
   horizontalPodAutoscaler:
@@ -61,7 +89,7 @@ spec:
       currentMetrics: null
       currentReplicas: 0
       desiredReplicas: 0
-  runtime: nodejs6
+  runtime: nodejs12
   service:
     ports:
     - name: http-function-port
