@@ -9,11 +9,10 @@ import requests, json
 def handler(event, context):
     print("event occurs")
     # event = {}
-    # event["data"] = '123 aaadfafadsfdaf'
-    
+    # event["data"] = b'03b47b485af57ad03657288f86db0d62cc0a21bf51849e1b77779925e7fc2eae https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/1619598179113_0.jpg'    
     try:
         print("data:", event["data"])
-        userId, url = event["data"].split()
+        userId, url = event["data"].decode().split()
         # url = "https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/img.png"
         print("URL:", url)
         req = urllib.request.Request(url, headers = {"User-Agent" : "Mozilla/5.0"})
