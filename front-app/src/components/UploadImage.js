@@ -3,6 +3,7 @@ import "../assets/css/ImageUpload.css";
 import { S3Config, UploadS3 } from "./UploadS3";
 import axios from "axios";
 import sha256 from "sha256";
+import { Container,Row, Col } from "react-bootstrap";
 
 const UploadImage = () => {
     const [contents, setContents] = useState({
@@ -21,7 +22,6 @@ const UploadImage = () => {
         };
         console.log(body);
 
-   
         UploadS3([state]);
 
         axios
@@ -31,7 +31,7 @@ const UploadImage = () => {
                 alert("성공");
             })
             .catch((e) => {
-                setHash(null)
+                setHash(null);
                 alert("실패");
             });
     };
@@ -61,20 +61,54 @@ const UploadImage = () => {
     };
 
     return (
-        <div>
-            <input type="file" class="custom-file-input" id="input" accept="image/*" onChange={(event) => setState(event.target.files[0])} value="" />
+        <Container>
+            <Row>
+                <Col>
+                
+                </Col>
+                </Row>
+            <div>
+                {/* <input type="file" class="file-upload-input" id="input" accept="image/*" onChange={(event) => setState(event.target.files[0])} value="" /> */}
 
-            {state && <button onClick={(event) => onRemove(event)}>Remove Image</button>}
-            {state && <img id="output" style={{ width: "50%" }} src={URL.createObjectURL(state)} />}
-            {state && <button onClick={(event) => onSubmit(event)}>제출하기</button>}
-            {hash && <button onClick={(event) => onResult(event)}>결과 확인하기</button>}
-            {hash && (
-                <div>
-                    <p>a: {contents.a}</p>
-                    <p>b: {contents.b}</p>
-                </div>
-            )}
-        </div>
+                <input
+                    type="file"
+                    style={{}}
+                    id="input"
+                    accept="image/*"
+                    onChange={(event) => setState(event.target.files[0])}
+                    value=""
+                />
+
+                {state && (
+                    <button onClick={(event) => onRemove(event)}>
+                        Remove Image
+                    </button>
+                )}
+                {state && (
+                    <img
+                        id="output"
+                        style={{ width: "50%" }}
+                        src={URL.createObjectURL(state)}
+                    />
+                )}
+                {state && (
+                    <button onClick={(event) => onSubmit(event)}>
+                        제출하기
+                    </button>
+                )}
+                {hash && (
+                    <button onClick={(event) => onResult(event)}>
+                        결과 확인하기
+                    </button>
+                )}
+                {hash && (
+                    <div>
+                        <p>a: {contents.a}</p>
+                        <p>b: {contents.b}</p>
+                    </div>
+                )}
+            </div>
+        </Container>
     );
 };
 

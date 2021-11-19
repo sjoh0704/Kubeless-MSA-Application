@@ -1,10 +1,11 @@
 import UploadImage from './components/UploadImage'
 import './App.css';
+import Home from './components/Home';
 
 function App() {
   return (
     <div>
-      <UploadImage/>
+      <Home></Home>
     </div>
     
   );
