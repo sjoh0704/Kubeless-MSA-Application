@@ -10,7 +10,7 @@ module.exports = (app) => {
     app.use(
         "/producer",
         proxy({
-            target: "http://producer.default.svc:8080",
+            target: process.env["REACT_APP_PRODUCER_URL"] || "http://producer.default.svc:8080",
             changeOrigin: true,
             pathRewrite: {
                 '^/producer': ''
