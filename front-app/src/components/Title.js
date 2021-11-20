@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 const Title = () => {
     return (
-        <div>
+        <div style={{backgroundColor: '#555555', color:'white', width:"100vw"}}>
             <Container><Row>
                 <Col>
                 <p>승주의 인공지능 동물상 테스트</p>

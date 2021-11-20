@@ -3,7 +3,7 @@ import "../assets/css/ImageUpload.css";
 import { S3Config, UploadS3 } from "./UploadS3";
 import axios from "axios";
 import sha256 from "sha256";
-import { Container,Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 const UploadImage = () => {
     const [contents, setContents] = useState({
@@ -64,20 +64,15 @@ const UploadImage = () => {
         <Container>
             <Row>
                 <Col>
-                
+                    <div>
+        
+                    </div>
                 </Col>
-                </Row>
-            <div>
-                {/* <input type="file" class="file-upload-input" id="input" accept="image/*" onChange={(event) => setState(event.target.files[0])} value="" /> */}
+            </Row>
 
-                <input
-                    type="file"
-                    style={{}}
-                    id="input"
-                    accept="image/*"
-                    onChange={(event) => setState(event.target.files[0])}
-                    value=""
-                />
+            <div>
+                <input type="file" class="file-upload-input" id="input" accept="image/*" onChange={(event) => setState(event.target.files[0])} value="" />
+
 
                 {state && (
                     <button onClick={(event) => onRemove(event)}>
