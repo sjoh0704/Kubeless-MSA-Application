@@ -9,7 +9,7 @@ import requests, json
 def handler(event, context):
     print("event occurs")
     # event = {}
-    # event["data"] = b'03b47b485af57ad03657288f86db0d62cc0a21bf51849e1b77779925e7fc2eae https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/1619598179113_0.jpg'    
+    # event["data"] = b'13b47b485af57ad03657288f86db0d62cc0a21bf51849e1b77779925e7fc2eae https://hanbucket-test.s3.ap-northeast-2.amazonaws.com/1619598179113_0.jpg'    
     try:
         print("data:", event["data"])
         userId, url = event["data"].decode().split()
@@ -23,9 +23,15 @@ def handler(event, context):
 
         # keras
         print(3)
-        
-        model = load_model('/kubeless/model/keras_model.h5')
-        # model = load_model('./model/keras_model.h5')
+        if userId[0] == '0':
+            model = load_model('/kubeless/model/male/keras_model.h5')
+            # model = load_model('./model/male/keras_model.h5')
+            print('male')
+        else:
+            model = load_model('/kubeless/model/female/keras_model.h5')
+            # model = load_model('./model/female/keras_model.h5')
+            print('female')
+
         print(4)
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
         print(5)
@@ -42,12 +48,20 @@ def handler(event, context):
         prediction = model.predict(data)
         
         #result
-        print("사람:", float(prediction[0][0]))
-        print("손바닥:", float(prediction[0][1]))
+        print("고양이:", float(prediction[0][0]))
+        print("강아지:", float(prediction[0][1]))
+        print("공룡:", float(prediction[0][2]))
+        print("곰:", float(prediction[0][3]))
+        print("여우:", float(prediction[0][4]))
+        print("토끼:", float(prediction[0][5]))
         data = {
             'userId': userId,
-            'a': float(prediction[0][0]),
-            'b': float(prediction[0][1])
+            'cat': float(prediction[0][0]),
+            'dog': float(prediction[0][1]),
+            'dino': float(prediction[0][2]),
+            'bear': float(prediction[0][3]),
+            'fox': float(prediction[0][4]),
+            'rabbit': float(prediction[0][5])
         }
         print(data)
         headers = {'Content-Type': 'application/json; charset=utf-8'}
@@ -63,4 +77,4 @@ def handler(event, context):
 
 
    
-handler(1, 1)
+# handler(1, 1)
