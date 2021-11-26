@@ -19,7 +19,7 @@ router.get('/info/:userId', async(req, res)=> {
 // create rating
 router.post('/info', async(req, res)=> {
     console.log(req.body)
-    const {userId, dog, cat, bear, cat, dino, rabbit} = req.body;
+    const {userId, dog, cat, bear, fox, dino, rabbit} = req.body;
     if(!userId){
         res.status(400).send({message: 'userId 없음'});
         return;
@@ -29,7 +29,7 @@ router.post('/info', async(req, res)=> {
         res.send({message: 'already info exist'});
         return;
     }
-    const info = new Info({userId, dog, cat, bear, cat, dino, rabbit});
+    const info = new Info({userId, dog, cat, bear, fox, dino, rabbit});
     await info.save();
     res.send({message: 'info create success'});
 })
