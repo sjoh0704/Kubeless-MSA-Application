@@ -6,12 +6,32 @@ const infoSchema = new Schema({
     unique: true,
     required: true,
   },
-  a:{
+  dog:{
     type: Number,
     required: true,
     default: 0,
   },
-  b:{
+  cat:{
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  dino:{
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  bear:{
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  fox:{
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  rabbit:{
     type: Number,
     required: true,
     default: 0,
