@@ -73,7 +73,17 @@ const UploadImage = () => {
                         alert("성공");
                         console.log(response);
                         let payload = response.data.payload;
-                        setContents({ dog: payload.dog, cat: payload.cat });
+
+                        setContents(
+                            <div>
+                                <p>강아지: {payload.dog} </p>
+                                <p>고양이: {payload.cat} </p>
+                                <p>토끼: {payload.rabbit} </p>
+                                <p>곰: {payload.bear} </p>
+                                <p>공룡: {payload.dino} </p>
+                                <p>여우: {payload.fox} </p>
+                            </div>
+                        );
                         setLoading(false);
                     })
                     .catch((e) => {
@@ -86,9 +96,8 @@ const UploadImage = () => {
             }
         }
         setLoading(false);
-        if(!find){
-            alert("Error: 관리자에게 문의하세요 ")
-
+        if (!find) {
+            alert("Error: 관리자에게 문의하세요 ");
         }
     };
 
@@ -145,13 +154,10 @@ const UploadImage = () => {
                     </div>
                 )}
                 <br />
-                {state && (
+                {hash && (
                     <div>
                         {contents ? (
-                            <div>
-                                <p>개 상: {contents.dog}</p>
-                                <p>고양이 상: {contents.cat}</p>
-                            </div>
+                            <div>{contents}</div>
                         ) : (
                             <div>
                                 <ClockLoader
