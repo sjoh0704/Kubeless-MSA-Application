@@ -5,7 +5,8 @@ import axios from "axios";
 import sha256 from "sha256";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { css } from "@emotion/react";
-import ClockLoader from "react-spinners/ClockLoader";
+import PulseLoader from "react-spinners/PulseLoader";
+import Result from "./Result";
 
 const override = css`
     display: block;
@@ -73,16 +74,7 @@ const UploadImage = () => {
                         console.log(response);
                         let payload = response.data.payload;
 
-                        setContents(
-                            <div>
-                                <p>강아지: {payload.dog} </p>
-                                <p>고양이: {payload.cat} </p>
-                                <p>토끼: {payload.rabbit} </p>
-                                <p>곰: {payload.bear} </p>
-                                <p>공룡: {payload.dino} </p>
-                                <p>여우: {payload.fox} </p>
-                            </div>
-                        );
+                        setContents(<Result payload={payload} />);
 
                         setLoading(false);
                     });
@@ -111,84 +103,121 @@ const UploadImage = () => {
     return (
         <Container>
             <Row>
-                <Col md={{ span: 3, offset: 0 }}>
-                    <Button variant="primary">Primary</Button>{" "}
-                    <span
-                        class="filebox"
-                        onClick={(event) => {
-                            setGender(0);
-                        }}
-                    >
-                        <label>남자</label>
-                    </span>
+                <Col md={{ span: 2, offset: 4 }}>
+                    <div className="d-grid gap-2">
+                        <Button
+                            style={{ padding: 8, fontSize: "1.2rem" }}
+                            onClick={() => setGender(0)}
+                            variant="primary"
+                        >
+                            남자
+                        </Button>
+                    </div>
                 </Col>
-                <Col md={{ span: 3, offset: 0 }}>
-                    <Button>test1</Button>
-                    <span
-                        class="filebox"
-                        onClick={(event) => {
-                            setGender(1);
-                        }}
-                    >
-                        <label>여자</label>
-                    </span>
+                <Col md={{ span: 2, offset: 0 }}>
+                    <div className="d-grid gap-2">
+                        <Button
+                            onClick={() => setGender(1)}
+                            variant="primary"
+                            style={{ padding: 8, fontSize: "1.2rem" }}
+                        >
+                            여자
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+            <br />
+            <Row>
+                <Col md={{ span: 4, offset: 4 }}>
+                    <div className="d-grid gap-2">
+                        <div class="filebox">
+                            <label
+                                for="ex_file"
+                                style={{
+                                    fontSize: "1.2rem",
+                                    paddingTop: 10,
+                                    paddingBottom: 10,
+                                }}
+                            >
+                                {state
+                                    ? "다른 사진으로 할래요?"
+                                    : "사진을 업로드하세요"}
+                            </label>
+                            <input
+                                type="file"
+                                id="ex_file"
+                                accept="image/*"
+                                onChange={onClickHandler}
+                                value=""
+                            />
+                        </div>
+                    </div>
                 </Col>
             </Row>
 
-            <div class="filebox">
-                <label for="ex_file">
-                    {state ? "다른 사진으로 할래요?" : "사진을 업로드하세요"}
-                </label>
-                <input
-                    type="file"
-                    id="ex_file"
-                    accept="image/*"
-                    onChange={onClickHandler}
-                    value=""
-                />
-            </div>
+            <br />
+            <Row>
+                <Col lg={{ span: 6, offset: 3 }}>
+                    {state && (
+                        <img
+                            id="output"
+                            style={{
+                                width: "100%",
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                            }}
+                            src={URL.createObjectURL(state)}
+                        />
+                    )}
+                </Col>
+            </Row>
+
             <br />
 
-            <div>
-                {state && (
-                    <img
-                        id="output"
-                        style={{ width: "100%" }}
-                        src={URL.createObjectURL(state)}
-                    />
-                )}
-                <br />
-                {state && (
-                    <div
-                        class="filebox"
-                        onClick={(event) => {
-                            let flag = onSubmit(event);
-                            console.log(flag);
-                            if (flag) onResult(event, flag);
-                            // if (flag) onResult(event, flag);
-                        }}
-                    >
-                        <label>결과 확인하기</label>
-                    </div>
-                )}
-                <br />
-                {hash && (
-                    <div>
-                        {contents ? (
-                            <div>{contents}</div>
-                        ) : (
-                            <div>
-                                <ClockLoader
+            <Row>
+                <Col lg={{ span: 6, offset: 3 }}>
+                    {state && (
+                        <div className="d-grid gap-2">
+                            <Button
+                                style={{ fontSize: "1.2rem" }}
+                                onClick={(event) => {
+                                    let flag = onSubmit(event);
+                                    console.log(flag);
+
+                                    if (false) onResult(event, flag);
+                                    // if (flag) onResult(event, flag);
+                                }}
+                            >
+                                결과 확인하기
+                            </Button>
+                        </div>
+                    )}
+                </Col>
+            </Row>
+
+            <br />
+
+            {/* {hash && ( */}
+            {hash && (
+                <div style={{ marginTop: 100 }}>
+                    {contents ? (
+                        <div>{contents}</div>
+                    ) : (
+                        <Row>
+                            <Col lg={{ span: 6, offset: 5 }}>
+                                <PulseLoader
                                     color={"#555555"}
                                     loading={loading}
                                     css={override}
                                     size={60}
                                 />
-                            </div>
-                        )}
-                    </div>
-                )}
-            </div>
+                            </Col>
+                        </Row>
+                    )}
+                </div>
+            )}
+
+            <div style={{ marginTop: 400 }}></div>
         </Container>
     );
 };

@@ -4,11 +4,11 @@ import { Container } from "react-bootstrap";
 
 const Home = () => {
     return (
-        <Container>
+        <div>
             <Title />
             <br />
             <UploadImage />
-        </Container>
+        </div>
     );
 };
 export default Home;
