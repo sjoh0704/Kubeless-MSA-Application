@@ -184,7 +184,7 @@ const UploadImage = () => {
                                     let flag = onSubmit(event);
                                     console.log(flag);
 
-                                    if (false) onResult(event, flag);
+                                    if (flag) onResult(event, flag);
                                     // if (flag) onResult(event, flag);
                                 }}
                             >
