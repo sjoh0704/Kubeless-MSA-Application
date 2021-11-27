@@ -1,10 +1,10 @@
-div {
+/* div {
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
-}
-button {
+} */
+/* button {
     margin: 10px;
     display: inline-block;
     background: linear-gradient(top, #f9f9f9, #e3e3e3);
@@ -12,8 +12,8 @@ button {
     border-radius: 3px;
     padding: 5px 8px;
     outline: none;
-}
-.custom-file-input::-webkit-file-upload-button {
+} */
+/* .custom-file-input::-webkit-file-upload-button {
     visibility: hidden;
 }
 .custom-file-input::before {
@@ -36,7 +36,7 @@ button {
 }
 .custom-file-input:active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
+} */
 
 .filebox label {
     display: inline-block;

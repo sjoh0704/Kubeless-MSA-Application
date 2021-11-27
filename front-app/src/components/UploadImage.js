@@ -3,7 +3,7 @@ import "../assets/css/ImageUpload.css";
 import { S3Config, UploadS3 } from "./UploadS3";
 import axios from "axios";
 import sha256 from "sha256";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { css } from "@emotion/react";
 import ClockLoader from "react-spinners/ClockLoader";
 
@@ -14,15 +14,15 @@ const override = css`
 `;
 
 const UploadImage = () => {
-    let find = false;
+    const [gender, setGender] = useState(0);
     const [loading, setLoading] = useState(false);
     const [contents, setContents] = useState(null);
     const [hash, setHash] = useState(null);
     const [state, setState] = useState(null);
 
     const onSubmit = (event) => {
-        find = false;
-        let hashed = sha256(state.name);
+        let hashed = gender + sha256(state.name);
+        console.log("hashed", hashed);
         const body = {
             userId: hashed,
             imageUrl: `https://${S3Config.bucketName}.s3.${S3Config.region}.amazonaws.com/${state.name}`,
@@ -31,17 +31,17 @@ const UploadImage = () => {
 
         UploadS3([state]);
         setLoading(true);
-
+        setHash(hashed);
         axios
             .post("/producer", body)
             .then((response) => {
-                setHash(hashed);
-                alert("성공");
+                alert("업로드 성공");
             })
             .catch((e) => {
                 setHash(null);
-                alert("실패");
+                alert("업로드 실패");
             });
+        return hashed;
     };
 
     const checkFileSize = (file) => {
@@ -56,12 +56,12 @@ const UploadImage = () => {
         return file;
     };
 
-    const onResult = async (event) => {
-        find = false;
+    const onResult = async (event, hash) => {
+        let find = false;
         const _sleep = (delay) =>
             new Promise((resolve) => setTimeout(resolve, delay));
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             if (!find) {
                 console.log("반복");
                 await _sleep(1000);
@@ -70,7 +70,6 @@ const UploadImage = () => {
                     // .get(`/api/v1/info/11`)
                     .then((response) => {
                         find = true;
-                        alert("성공");
                         console.log(response);
                         let payload = response.data.payload;
 
@@ -84,25 +83,23 @@ const UploadImage = () => {
                                 <p>여우: {payload.fox} </p>
                             </div>
                         );
+
                         setLoading(false);
-                    })
-                    .catch((e) => {
-                        console.log(e);
-                        // setContents({ dog: 0.9, cat: 0.1 });
-                        // setLoading(false);
                     });
-            } else {
+            }
+            if (find) {
                 break;
             }
         }
         setLoading(false);
         if (!find) {
             alert("Error: 관리자에게 문의하세요 ");
+        } else {
+            alert("결과를 가져왔어요!");
         }
     };
 
     const onClickHandler = (event) => {
-        find = false;
         setState(null);
         setHash(null);
         setContents(null);
@@ -114,8 +111,27 @@ const UploadImage = () => {
     return (
         <Container>
             <Row>
-                <Col>
-                    <div></div>
+                <Col md={{ span: 3, offset: 0 }}>
+                    <Button variant="primary">Primary</Button>{" "}
+                    <span
+                        class="filebox"
+                        onClick={(event) => {
+                            setGender(0);
+                        }}
+                    >
+                        <label>남자</label>
+                    </span>
+                </Col>
+                <Col md={{ span: 3, offset: 0 }}>
+                    <Button>test1</Button>
+                    <span
+                        class="filebox"
+                        onClick={(event) => {
+                            setGender(1);
+                        }}
+                    >
+                        <label>여자</label>
+                    </span>
                 </Col>
             </Row>
 
@@ -146,8 +162,10 @@ const UploadImage = () => {
                     <div
                         class="filebox"
                         onClick={(event) => {
-                            onSubmit(event);
-                            onResult(event);
+                            let flag = onSubmit(event);
+                            console.log(flag);
+                            if (flag) onResult(event, flag);
+                            // if (flag) onResult(event, flag);
                         }}
                     >
                         <label>결과 확인하기</label>
