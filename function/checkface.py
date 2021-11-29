@@ -43,6 +43,7 @@ def handler(event, context):
         print(8)
         normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
         print(9)
+        print(data)
         data[0] = normalized_image_array
         print(10)
         prediction = model.predict(data)
