@@ -183,8 +183,20 @@ const UploadImage = () => {
                                 onClick={(event) => {
                                     let flag = onSubmit(event);
                                     console.log(flag);
+                                    setContents(
+                                        <Result
+                                            payload={{
+                                                cat: 0.1,
+                                                dog: 0.2,
+                                                rabbit: 0.3,
+                                                bear: 0.4,
+                                                dino: 0.1123412,
+                                                fox: 0.3,
+                                            }}
+                                        />
+                                    );
 
-                                    if (flag) onResult(event, flag);
+                                    if (false) onResult(event, flag);
                                     // if (flag) onResult(event, flag);
                                 }}
                             >
@@ -198,7 +210,7 @@ const UploadImage = () => {
             <br />
 
             {/* {hash && ( */}
-            {hash && (
+            {state && (
                 <div style={{ marginTop: 100 }}>
                     {contents ? (
                         <div>{contents}</div>

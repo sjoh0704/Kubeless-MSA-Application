@@ -1,4 +1,5 @@
 import { Col, Row, ProgressBar } from "react-bootstrap";
+
 const Result = ({ payload }) => {
     const { dog, cat, dino, rabbit, bear, fox } = payload;
     return (
@@ -7,21 +8,22 @@ const Result = ({ payload }) => {
                 <Col lg={{ span: 1, offset: 2 }}>
                     <p
                         style={{
-                            fontSize: "1.2rem",
+                            fontSize: "1.5rem",
                             fontWeight: "bold",
                         }}
                     >
-                        고양이상
+                        고양이
                     </p>
                 </Col>
 
                 <Col lg={{ span: 6, offset: 0 }}>
                     <ProgressBar
+                        variant="info"
                         style={{
-                            height: "1.5rem",
+                            height: "2rem",
                         }}
-                        now={cat * 100}
-                        label={`${cat * 100}%`}
+                        now={Math.round(cat * 100)}
+                        label={`${Math.round(cat * 100)}%`}
                     />
                 </Col>
             </Row>
@@ -29,21 +31,22 @@ const Result = ({ payload }) => {
                 <Col lg={{ span: 1, offset: 2 }}>
                     <p
                         style={{
-                            fontSize: "1.2rem",
+                            fontSize: "1.5rem",
                             fontWeight: "bold",
                         }}
                     >
-                        강아지상
+                        강아지
                     </p>
                 </Col>
 
                 <Col lg={{ span: 6, offset: 0 }}>
                     <ProgressBar
+                        variant="success"
                         style={{
-                            height: "1.5rem",
+                            height: "2rem",
                         }}
-                        now={dog * 100}
-                        label={`${dog * 100}%`}
+                        now={Math.round(dog * 100)}
+                        label={`${Math.round(dog * 100)}%`}
                     />
                 </Col>
             </Row>
@@ -51,21 +54,21 @@ const Result = ({ payload }) => {
                 <Col lg={{ span: 1, offset: 2 }}>
                     <p
                         style={{
-                            fontSize: "1.2rem",
+                            fontSize: "1.5rem",
                             fontWeight: "bold",
                         }}
                     >
-                        곰상
+                        곰
                     </p>
                 </Col>
 
                 <Col lg={{ span: 6, offset: 0 }}>
                     <ProgressBar
                         style={{
-                            height: "1.5rem",
+                            height: "2rem",
                         }}
-                        now={bear * 100}
-                        label={`${bear * 100}%`}
+                        now={Math.round(bear * 100)}
+                        label={`${Math.round(bear * 100)}%`}
                     />
                 </Col>
             </Row>
@@ -73,21 +76,22 @@ const Result = ({ payload }) => {
                 <Col lg={{ span: 1, offset: 2 }}>
                     <p
                         style={{
-                            fontSize: "1.2rem",
+                            fontSize: "1.5rem",
                             fontWeight: "bold",
                         }}
                     >
-                        공룡상
+                        공룡
                     </p>
                 </Col>
 
                 <Col lg={{ span: 6, offset: 0 }}>
                     <ProgressBar
+                        variant="danger"
                         style={{
-                            height: "1.5rem",
+                            height: "2rem",
                         }}
-                        now={dino * 100}
-                        label={`${dino * 100}%`}
+                        now={Math.round(dino * 100)}
+                        label={`${Math.round(dino * 100)}%`}
                     />
                 </Col>
             </Row>
@@ -95,21 +99,22 @@ const Result = ({ payload }) => {
                 <Col lg={{ span: 1, offset: 2 }}>
                     <p
                         style={{
-                            fontSize: "1.2rem",
+                            fontSize: "1.5rem",
                             fontWeight: "bold",
                         }}
                     >
-                        여우상
+                        여우
                     </p>
                 </Col>
 
                 <Col lg={{ span: 6, offset: 0 }}>
                     <ProgressBar
+                        variant="warning"
                         style={{
-                            height: "1.5rem",
+                            height: "2rem",
                         }}
-                        now={fox * 100}
-                        label={`${fox * 100}%`}
+                        now={Math.round(fox * 100)}
+                        label={`${Math.round(fox * 100)}%`}
                     />
                 </Col>
             </Row>
@@ -117,21 +122,22 @@ const Result = ({ payload }) => {
                 <Col lg={{ span: 1, offset: 2 }}>
                     <p
                         style={{
-                            fontSize: "1.2rem",
+                            fontSize: "1.5rem",
                             fontWeight: "bold",
                         }}
                     >
-                        토끼상
+                        토끼
                     </p>
                 </Col>
 
                 <Col lg={{ span: 6, offset: 0 }}>
                     <ProgressBar
+                        variant="info"
                         style={{
-                            height: "1.5rem",
+                            height: "2rem",
                         }}
-                        now={rabbit * 100}
-                        label={`${rabbit * 100}%`}
+                        now={Math.round(rabbit * 100)}
+                        label={`${Math.round(rabbit * 100)}%`}
                     />
                 </Col>
             </Row>
