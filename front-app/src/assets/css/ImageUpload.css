@@ -44,20 +44,20 @@
     color: #fff;
     line-height: normal;
     /* vertical-align: middle; */
-    background-color: #5cb85c;
+    background-color: #1E90FF;
     cursor: pointer;
-    border: 1px solid #4cae4c;
+    border: 1px solid #1E90FF;
     border-radius: 0.25em;
     -webkit-transition: background-color 0.2s;
     transition: background-color 0.2s;
 }
 
 .filebox label:hover {
-    background-color: #6ed36e;
+    background-color: #0000FF;
 }
 
 .filebox label:active {
-    background-color: #367c36;
+    background-color: #0000FF;
 }
 
 .filebox input[type="file"] {
