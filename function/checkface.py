@@ -19,7 +19,7 @@ def handler(event, context):
         print(1)
         res = urllib.request.urlopen(req).read()
         print(2)
-        image = Image.open(BytesIO(res))
+        image = Image.open(BytesIO(res)).convert('RGB')
 
         # keras
         print(3)
