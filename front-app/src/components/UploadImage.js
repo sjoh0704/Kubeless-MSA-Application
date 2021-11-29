@@ -140,7 +140,7 @@ const UploadImage = () => {
                                 }}
                             >
                                 {state
-                                    ? "다른 사진으로 할래요?"
+                                    ? "다른 사진으로 할래요"
                                     : "사진을 업로드하세요"}
                             </label>
                             <input
@@ -157,8 +157,8 @@ const UploadImage = () => {
 
             <br />
             <Row>
-                <Col lg={{ span: 6, offset: 3 }}>
-                    {state && (
+                <Col lg={{ span: 4, offset: 4 }}>
+                    {state ? (
                         <img
                             id="output"
                             style={{
@@ -168,6 +168,8 @@ const UploadImage = () => {
                             }}
                             src={URL.createObjectURL(state)}
                         />
+                    ) : (
+                        <div style={{ height: 400 }}></div>
                     )}
                 </Col>
             </Row>
@@ -175,7 +177,7 @@ const UploadImage = () => {
             <br />
 
             <Row>
-                <Col lg={{ span: 6, offset: 3 }}>
+                <Col lg={{ span: 4, offset: 4 }}>
                     {state && (
                         <div className="d-grid gap-2">
                             <Button
@@ -211,7 +213,7 @@ const UploadImage = () => {
 
             {/* {hash && ( */}
             {state && (
-                <div style={{ marginTop: 100 }}>
+                <div style={{ marginTop: 50 }}>
                     {contents ? (
                         <div>{contents}</div>
                     ) : (
@@ -229,7 +231,7 @@ const UploadImage = () => {
                 </div>
             )}
 
-            <div style={{ marginTop: 400 }}></div>
+            <div style={{ marginTop: 200 }}></div>
         </Container>
     );
 };

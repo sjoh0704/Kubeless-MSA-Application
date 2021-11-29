@@ -1,6 +1,7 @@
 import Title from "./Title";
 import UploadImage from "./UploadImage";
 import { Container } from "react-bootstrap";
+import Footer from "./Footer";
 
 const Home = () => {
     return (
@@ -8,6 +9,8 @@ const Home = () => {
             <Title />
             <br />
             <UploadImage />
+            <hr style={{ margin: 0 }} />
+            <Footer />
         </div>
     );
 };
