@@ -1,16 +1,15 @@
-# Kubeless를 이용한 MSA 동물상 테스트 애플리케이션(진행중)
+# Kubeless 기반 인공지능 동물상 테스트 MSA Application
 
 <br/>
 
 ## 개요
-
 K8S serverless 오픈소스인 Kubeless를 이용하여 사진 업로드시 요청이 메시지 큐를 통해 전달되어 동물상 모델 판정 함수를 실행합니다.
 
 
 <br/>
 
 ## 주요 기능 
-- function as a service
+- 
 - App of Apps
 <br/>
 
