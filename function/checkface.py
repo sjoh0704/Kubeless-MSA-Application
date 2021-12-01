@@ -41,7 +41,6 @@ def handler(event, context):
         }
         print(data)
         headers = {'Content-Type': 'application/json; charset=utf-8'}
-        # res = requests.post("http://localhost:8080/api/v1/info", data=json.dumps(data), headers=headers)
         res = requests.post("http://backend-service.default.svc:8080/api/v1/info", data=json.dumps(data), headers=headers)
         print(res.text)
         return 'ok'
