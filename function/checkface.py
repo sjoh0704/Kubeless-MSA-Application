@@ -13,7 +13,6 @@ def handler(event, context):
         image = Image.open(BytesIO(res)).convert('RGB')
 
         # keras
-        print(3)
         if userId[0] == '0':
             model = load_model('/kubeless/model/male/keras_model.h5')
             print('male')
