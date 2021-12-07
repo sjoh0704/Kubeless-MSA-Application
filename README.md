@@ -20,7 +20,7 @@ K8S의 serverless 오픈소스인 Kubeless를 이용하여 동물상 모델 판�
 -   Message Queue
 -   Function as a service
 -   Container Orchestration
--   [App of Apps Pattern](https://github.com/sjoh0704/Sseung-Helm-Chart/tree/master/App "go to sjoh0704's helm chart!")
+-   [App of Apps Pattern](https://github.com/sjoh0704/Sseung-Helm-Chart/tree/master/Kubeless-MSA-Application "go to sjoh0704's helm chart!")
 -   동물상 테스트 AI(Teachable machine + [image crawling](https://github.com/sjoh0704/Image-Crawling "image crawling"))
 
 <br/>
