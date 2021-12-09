@@ -15,7 +15,7 @@ K8S의 serverless 오픈소스인 Kubeless를 이용하여 동물상 모델 판�
 
 <br/>
 
-## 주요 기술
+## Main Features
 
 -   Message Queue
 -   Function as a service
